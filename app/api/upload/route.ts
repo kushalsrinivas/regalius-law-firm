@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+import { supabaseAdmin, UPLOADS_BUCKET } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,30 +34,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Generate unique filename
+    const timestamp = Date.now();
+    const extension = file.name.split('.').pop();
+    const filename = `${timestamp}.${extension}`;
+
+    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create uploads directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
+    // Upload to Supabase Storage
+    const { data, error } = await supabaseAdmin.storage
+      .from(UPLOADS_BUCKET)
+      .upload(filename, buffer, {
+        contentType: file.type,
+        upsert: false,
+      });
+
+    if (error) {
+      console.error('Supabase upload error:', error);
+      return NextResponse.json(
+        { error: 'Failed to upload file to storage' },
+        { status: 500 }
+      );
     }
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const extension = path.extname(file.name);
-    const filename = `${timestamp}${extension}`;
-    const filepath = path.join(uploadDir, filename);
-
-    // Save file
-    await writeFile(filepath, buffer);
-
-    // Return public URL
-    const publicUrl = `/uploads/${filename}`;
+    // Get public URL
+    const { data: urlData } = supabaseAdmin.storage
+      .from(UPLOADS_BUCKET)
+      .getPublicUrl(filename);
 
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: urlData.publicUrl,
       filename,
     });
   } catch (error) {
@@ -70,4 +77,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
