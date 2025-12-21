@@ -18,10 +18,11 @@ const serviceSchema = z.object({
 // Get single service
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const service = db.services.getById(params.id);
+    const { id } = await params;
+    const service = db.services.getById(id);
     
     if (!service) {
       return NextResponse.json(
@@ -43,7 +44,7 @@ export async function GET(
 // Admin only - Update service
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await verifySession();
@@ -51,6 +52,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     const body = await request.json();
 
     const validation = serviceSchema.safeParse(body);
@@ -69,14 +71,14 @@ export async function PATCH(
 
     // Check if slug already exists (excluding current service)
     const existing = db.services.getBySlug(slug);
-    if (existing && existing.id !== params.id) {
+    if (existing && existing.id !== id) {
       return NextResponse.json(
         { error: 'A service with this title already exists' },
         { status: 400 }
       );
     }
 
-    const service = db.services.update(params.id, {
+    const service = db.services.update(id, {
       ...validation.data,
       slug,
     });
@@ -101,7 +103,7 @@ export async function PATCH(
 // Admin only - Delete service
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await verifySession();
@@ -109,7 +111,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const success = db.services.delete(params.id);
+    const { id } = await params;
+    const success = db.services.delete(id);
     
     if (!success) {
       return NextResponse.json(

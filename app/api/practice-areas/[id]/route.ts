@@ -16,10 +16,11 @@ const practiceAreaSchema = z.object({
 // Get single practice area
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const practiceArea = db.practiceAreas.getById(params.id);
+    const { id } = await params;
+    const practiceArea = db.practiceAreas.getById(id);
     
     if (!practiceArea) {
       return NextResponse.json(
@@ -41,7 +42,7 @@ export async function GET(
 // Admin only - Update practice area
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await verifySession();
@@ -49,6 +50,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     const body = await request.json();
 
     const validation = practiceAreaSchema.safeParse(body);
@@ -67,14 +69,14 @@ export async function PATCH(
 
     // Check if slug already exists (excluding current practice area)
     const existing = db.practiceAreas.getBySlug(slug);
-    if (existing && existing.id !== params.id) {
+    if (existing && existing.id !== id) {
       return NextResponse.json(
         { error: 'A practice area with this title already exists' },
         { status: 400 }
       );
     }
 
-    const practiceArea = db.practiceAreas.update(params.id, {
+    const practiceArea = db.practiceAreas.update(id, {
       ...validation.data,
       slug,
     });
@@ -99,7 +101,7 @@ export async function PATCH(
 // Admin only - Delete practice area
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await verifySession();
@@ -107,7 +109,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const success = db.practiceAreas.delete(params.id);
+    const { id } = await params;
+    const success = db.practiceAreas.delete(id);
     
     if (!success) {
       return NextResponse.json(

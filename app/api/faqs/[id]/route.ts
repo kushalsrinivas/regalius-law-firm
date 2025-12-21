@@ -31,11 +31,12 @@ async function writeFAQs(faqs: FAQ[]) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const faqs = await readFAQs();
-    const faq = faqs.find((f: FAQ) => f.id === params.id);
+    const faq = faqs.find((f: FAQ) => f.id === id);
 
     if (!faq) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
@@ -53,12 +54,13 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const faqs = await readFAQs();
-    const index = faqs.findIndex((f: FAQ) => f.id === params.id);
+    const index = faqs.findIndex((f: FAQ) => f.id === id);
 
     if (index === -1) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
@@ -67,7 +69,7 @@ export async function PUT(
     const updatedFAQ: FAQ = {
       ...faqs[index],
       ...body,
-      id: params.id,
+      id: id,
       updatedAt: new Date().toISOString(),
     };
 
@@ -86,11 +88,12 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const faqs = await readFAQs();
-    const index = faqs.findIndex((f: FAQ) => f.id === params.id);
+    const index = faqs.findIndex((f: FAQ) => f.id === id);
 
     if (index === -1) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
