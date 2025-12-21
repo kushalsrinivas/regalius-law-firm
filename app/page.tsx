@@ -10,8 +10,8 @@ import {
   Scale,
   Users,
   Award,
-  Building2,
   ChevronDown,
+  Globe,
 } from "lucide-react";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -149,7 +149,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: 1 }}
                 className="absolute -bottom-6 -left-6 bg-[#C6B27E] text-[#071731] p-8 rounded-lg shadow-2xl"
               >
-                <div className="text-4xl font-bold mb-1">30+</div>
+                <div className="text-4xl font-bold mb-1">5+</div>
                 <div className="text-sm">Years of Excellence</div>
               </motion.div>
             </motion.div>
@@ -162,10 +162,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Scale, value: "500+", label: "Cases Won" },
-              { icon: Users, value: "200+", label: "Satisfied Clients" },
-              { icon: Award, value: "50+", label: "Awards Received" },
-              { icon: Building2, value: "5", label: "Global Offices" },
+              { icon: Scale, value: "50+", label: "Cases Won" },
+              { icon: Users, value: "100+", label: "Satisfied Clients" },
+              { icon: Award, value: "5", label: "Awards Received" },
+              { icon: Globe, value: "100%", label: "Legal Way" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

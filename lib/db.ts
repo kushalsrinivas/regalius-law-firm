@@ -59,6 +59,7 @@ export interface Attorney {
   experience: string;
   email: string;
   phone: string;
+  linkedin?: string;
   photo: string;
   bio: string;
   practiceAreas: string[];

@@ -56,7 +56,9 @@ export default function AttorneyProfilePage() {
       const res = await fetch("/api/attorneys");
       if (res.ok) {
         const data = await res.json();
-        const foundAttorney = data.attorneys.find((a: Attorney) => a.slug === slug);
+        const foundAttorney = data.attorneys.find(
+          (a: Attorney) => a.slug === slug
+        );
         if (foundAttorney) {
           setAttorney(foundAttorney);
         } else {
@@ -72,6 +74,7 @@ export default function AttorneyProfilePage() {
       setLoading(false);
     }
   };
+  console.log(attorney);
 
   if (loading) {
     return (
@@ -87,8 +90,12 @@ export default function AttorneyProfilePage() {
       <div className="min-h-screen bg-[#071731]">
         <Navigation />
         <div className="pt-32 pb-20 px-4 text-center">
-          <h1 className="text-4xl font-bold text-[#F2F2F2] mb-4">Attorney Not Found</h1>
-          <p className="text-[#C7CBD1] mb-8">The attorney you're looking for doesn't exist.</p>
+          <h1 className="text-4xl font-bold text-[#F2F2F2] mb-4">
+            Attorney Not Found
+          </h1>
+          <p className="text-[#C7CBD1] mb-8">
+            The attorney you're looking for doesn't exist.
+          </p>
           <Link href="/about">
             <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663]">
               <ArrowLeft className="mr-2" size={16} />
@@ -141,8 +148,12 @@ export default function AttorneyProfilePage() {
                   <h1 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-3">
                     {attorney.name}
                   </h1>
-                  <p className="text-[#C6B27E] text-xl font-medium mb-4">{attorney.title}</p>
-                  <p className="text-[#C7CBD1] text-lg mb-6">{attorney.specialty}</p>
+                  <p className="text-[#C6B27E] text-xl font-medium mb-4">
+                    {attorney.title}
+                  </p>
+                  <p className="text-[#C7CBD1] text-lg mb-6">
+                    {attorney.specialty}
+                  </p>
 
                   <div className="flex flex-wrap gap-3">
                     {attorney.practiceAreas.map((area, i) => (
@@ -204,7 +215,10 @@ export default function AttorneyProfilePage() {
                 </h2>
                 <ul className="space-y-3">
                   {attorney.education.map((edu, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[#C7CBD1] text-lg">
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-[#C7CBD1] text-lg"
+                    >
                       <div className="w-2 h-2 rounded-full bg-[#C6B27E] mt-2.5 flex-shrink-0" />
                       <span>{edu}</span>
                     </li>
@@ -226,7 +240,10 @@ export default function AttorneyProfilePage() {
                   </h2>
                   <ul className="space-y-3">
                     {attorney.barAdmissions.map((bar, i) => (
-                      <li key={i} className="flex items-start gap-3 text-[#C7CBD1] text-lg">
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 text-[#C7CBD1] text-lg"
+                      >
                         <div className="w-2 h-2 rounded-full bg-[#C6B27E] mt-2.5 flex-shrink-0" />
                         <span>{bar}</span>
                       </li>
@@ -279,7 +296,9 @@ export default function AttorneyProfilePage() {
                     <div>
                       <div className="flex items-center gap-3 mb-2">
                         <Mail className="text-[#C6B27E]" size={20} />
-                        <span className="text-sm text-[#C7CBD1] font-medium">Email</span>
+                        <span className="text-sm text-[#C7CBD1] font-medium">
+                          Email
+                        </span>
                       </div>
                       <a
                         href={`mailto:${attorney.email}`}
@@ -292,7 +311,9 @@ export default function AttorneyProfilePage() {
                     <div>
                       <div className="flex items-center gap-3 mb-2">
                         <Phone className="text-[#C6B27E]" size={20} />
-                        <span className="text-sm text-[#C7CBD1] font-medium">Phone</span>
+                        <span className="text-sm text-[#C7CBD1] font-medium">
+                          Phone
+                        </span>
                       </div>
                       <a
                         href={`tel:${attorney.phone}`}
@@ -306,7 +327,9 @@ export default function AttorneyProfilePage() {
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Linkedin className="text-[#C6B27E]" size={20} />
-                          <span className="text-sm text-[#C7CBD1] font-medium">LinkedIn</span>
+                          <span className="text-sm text-[#C7CBD1] font-medium">
+                            LinkedIn
+                          </span>
                         </div>
                         <a
                           href={attorney.linkedin}
@@ -322,7 +345,9 @@ export default function AttorneyProfilePage() {
                     <div>
                       <div className="flex items-center gap-3 mb-2">
                         <MapPin className="text-[#C6B27E]" size={20} />
-                        <span className="text-sm text-[#C7CBD1] font-medium">Office</span>
+                        <span className="text-sm text-[#C7CBD1] font-medium">
+                          Office
+                        </span>
                       </div>
                       <p className="text-[#F2F2F2] pl-8">
                         #50,1,Infantry Road,
@@ -335,7 +360,9 @@ export default function AttorneyProfilePage() {
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-[#2C3E5F]">
-                    <h4 className="text-sm text-[#C7CBD1] font-medium mb-4">Working Hours</h4>
+                    <h4 className="text-sm text-[#C7CBD1] font-medium mb-4">
+                      Working Hours
+                    </h4>
                     <div className="space-y-2 text-sm text-[#F2F2F2]">
                       <div className="flex justify-between">
                         <span className="text-[#C7CBD1]">Mon - Fri</span>
@@ -368,4 +395,3 @@ export default function AttorneyProfilePage() {
     </div>
   );
 }
-

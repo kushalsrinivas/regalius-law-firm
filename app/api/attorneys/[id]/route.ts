@@ -11,6 +11,7 @@ const updateSchema = z.object({
   experience: z.string().optional(),
   email: z.string().email().optional(),
   phone: z.string().optional(),
+  linkedin: z.string().optional(),
   photo: z.string().optional(),
   bio: z.string().optional(),
   practiceAreas: z.array(z.string()).optional(),

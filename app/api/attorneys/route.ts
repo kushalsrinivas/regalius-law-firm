@@ -11,6 +11,7 @@ const attorneySchema = z.object({
   experience: z.string().min(1, 'Experience is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(1, 'Phone is required'),
+  linkedin: z.string().optional(),
   photo: z.string().min(1, 'Photo is required'),
   bio: z.string().min(1, 'Bio is required'),
   practiceAreas: z.array(z.string()).min(1, 'At least one practice area required'),
