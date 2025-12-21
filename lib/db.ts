@@ -6,6 +6,8 @@ const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 const BLOGS_FILE = path.join(DATA_DIR, 'blogs.json');
 const ADMIN_FILE = path.join(DATA_DIR, 'admin.json');
 const ATTORNEYS_FILE = path.join(DATA_DIR, 'attorneys.json');
+const PRACTICE_AREAS_FILE = path.join(DATA_DIR, 'practice-areas.json');
+const SERVICES_FILE = path.join(DATA_DIR, 'services.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -21,6 +23,12 @@ if (!fs.existsSync(BLOGS_FILE)) {
 }
 if (!fs.existsSync(ATTORNEYS_FILE)) {
   fs.writeFileSync(ATTORNEYS_FILE, JSON.stringify([]));
+}
+if (!fs.existsSync(PRACTICE_AREAS_FILE)) {
+  fs.writeFileSync(PRACTICE_AREAS_FILE, JSON.stringify([]));
+}
+if (!fs.existsSync(SERVICES_FILE)) {
+  fs.writeFileSync(SERVICES_FILE, JSON.stringify([]));
 }
 if (!fs.existsSync(ADMIN_FILE)) {
   // Default admin: email: admin@regaliuslaw.com, password: Admin@123
@@ -90,6 +98,36 @@ export interface Attorney {
   practiceAreas: string[];
   barAdmissions: string[];
   languages: string[];
+  status: 'active' | 'inactive';
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PracticeArea {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  image: string;
+  icon?: string;
+  status: 'active' | 'inactive';
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Service {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  image: string;
+  icon?: string;
+  category: string;
+  features: string[];
   status: 'active' | 'inactive';
   order: number;
   createdAt: string;
@@ -250,6 +288,108 @@ export const db = {
       const filtered = attorneys.filter((a) => a.id !== id);
       if (filtered.length === attorneys.length) return false;
       fs.writeFileSync(ATTORNEYS_FILE, JSON.stringify(filtered, null, 2));
+      return true;
+    },
+  },
+
+  // Practice Area operations
+  practiceAreas: {
+    getAll: (): PracticeArea[] => {
+      const data = fs.readFileSync(PRACTICE_AREAS_FILE, 'utf-8');
+      return JSON.parse(data);
+    },
+    getActive: (): PracticeArea[] => {
+      const areas = db.practiceAreas.getAll();
+      return areas.filter((a) => a.status === 'active').sort((a, b) => a.order - b.order);
+    },
+    getById: (id: string): PracticeArea | undefined => {
+      const areas = db.practiceAreas.getAll();
+      return areas.find((a) => a.id === id);
+    },
+    getBySlug: (slug: string): PracticeArea | undefined => {
+      const areas = db.practiceAreas.getAll();
+      return areas.find((a) => a.slug === slug);
+    },
+    create: (area: Omit<PracticeArea, 'id' | 'createdAt' | 'updatedAt'>): PracticeArea => {
+      const areas = db.practiceAreas.getAll();
+      const newArea: PracticeArea = {
+        ...area,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      areas.push(newArea);
+      fs.writeFileSync(PRACTICE_AREAS_FILE, JSON.stringify(areas, null, 2));
+      return newArea;
+    },
+    update: (id: string, updates: Partial<PracticeArea>): PracticeArea | null => {
+      const areas = db.practiceAreas.getAll();
+      const index = areas.findIndex((a) => a.id === id);
+      if (index === -1) return null;
+      areas[index] = {
+        ...areas[index],
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      };
+      fs.writeFileSync(PRACTICE_AREAS_FILE, JSON.stringify(areas, null, 2));
+      return areas[index];
+    },
+    delete: (id: string): boolean => {
+      const areas = db.practiceAreas.getAll();
+      const filtered = areas.filter((a) => a.id !== id);
+      if (filtered.length === areas.length) return false;
+      fs.writeFileSync(PRACTICE_AREAS_FILE, JSON.stringify(filtered, null, 2));
+      return true;
+    },
+  },
+
+  // Service operations
+  services: {
+    getAll: (): Service[] => {
+      const data = fs.readFileSync(SERVICES_FILE, 'utf-8');
+      return JSON.parse(data);
+    },
+    getActive: (): Service[] => {
+      const services = db.services.getAll();
+      return services.filter((s) => s.status === 'active').sort((a, b) => a.order - b.order);
+    },
+    getById: (id: string): Service | undefined => {
+      const services = db.services.getAll();
+      return services.find((s) => s.id === id);
+    },
+    getBySlug: (slug: string): Service | undefined => {
+      const services = db.services.getAll();
+      return services.find((s) => s.slug === slug);
+    },
+    create: (service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Service => {
+      const services = db.services.getAll();
+      const newService: Service = {
+        ...service,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      services.push(newService);
+      fs.writeFileSync(SERVICES_FILE, JSON.stringify(services, null, 2));
+      return newService;
+    },
+    update: (id: string, updates: Partial<Service>): Service | null => {
+      const services = db.services.getAll();
+      const index = services.findIndex((s) => s.id === id);
+      if (index === -1) return null;
+      services[index] = {
+        ...services[index],
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      };
+      fs.writeFileSync(SERVICES_FILE, JSON.stringify(services, null, 2));
+      return services[index];
+    },
+    delete: (id: string): boolean => {
+      const services = db.services.getAll();
+      const filtered = services.filter((s) => s.id !== id);
+      if (filtered.length === services.length) return false;
+      fs.writeFileSync(SERVICES_FILE, JSON.stringify(filtered, null, 2));
       return true;
     },
   },

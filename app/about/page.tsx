@@ -53,11 +53,10 @@ export default function AboutPage() {
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">ABOUT REGALIUS LAW PARTNERS</div>
             <h1 className="font-serif text-5xl md:text-7xl font-bold text-[#F2F2F2] mb-6 text-balance">
-              Legacy of Excellence
+              Who We Are
             </h1>
             <p className="text-[#C7CBD1] text-xl leading-relaxed text-pretty">
-              For over three decades, we have been at the forefront of legal innovation, providing unparalleled counsel
-              to clients across the globe.
+              Regalius Law Partners is a full‑service law firm providing advisory, transactional, and dispute‑resolution services across India.
             </p>
           </motion.div>
         </div>
@@ -73,19 +72,12 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">Our Story</h2>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">About Us</h2>
               <p className="text-[#C7CBD1] leading-relaxed mb-4">
-                Founded in 1990 by distinguished attorneys Marcus Regalius and Victoria Chen, Regalius Law Partners was
-                built on a foundation of integrity, excellence, and unwavering commitment to client success.
-              </p>
-              <p className="text-[#C7CBD1] leading-relaxed mb-4">
-                What began as a small practice in New York has evolved into a global powerhouse with offices spanning
-                five continents, serving Fortune 500 companies, high-net-worth individuals, and innovative startups
-                alike.
+                Regalius Law Partners is a full‑service law firm providing advisory, transactional, and dispute‑resolution services across India. We act for entrepreneurs, growing companies, established businesses, and individuals, delivering practical legal solutions aligned with real‑world objectives.
               </p>
               <p className="text-[#C7CBD1] leading-relaxed">
-                Our approach combines traditional legal wisdom with cutting-edge strategies, ensuring our clients
-                receive counsel that is both time-tested and forward-thinking.
+                Our lawyers bring deep experience in civil and commercial litigation, property matters, corporate advisory, and regulatory compliance. We focus on anticipating risk, protecting interests, and delivering outcomes—not just opinions.
               </p>
             </motion.div>
 

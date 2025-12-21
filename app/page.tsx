@@ -5,7 +5,14 @@ import { SplashScreen } from "@/components/splash-screen";
 import { Navigation } from "@/components/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Scale, Users, Award, Building2 } from "lucide-react";
+import {
+  ArrowRight,
+  Scale,
+  Users,
+  Award,
+  Building2,
+  ChevronDown,
+} from "lucide-react";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 
@@ -18,7 +25,7 @@ const navItems = [
 
 const heroImages = [
   "/luxury-law-office-interior-with-dark-wood-and-gold.jpg",
-  "/professional-courtroom.jpg",
+
   "/corporate-law-office.jpg",
   "/historic-law-firm-library.jpg",
   "/hero.png",
@@ -27,6 +34,9 @@ const heroImages = [
 export default function HomePage() {
   const [showSplash, setShowSplash] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const [openFaqId, setOpenFaqId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!showSplash) {
@@ -37,6 +47,25 @@ export default function HomePage() {
       return () => clearInterval(interval);
     }
   }, [showSplash]);
+
+  useEffect(() => {
+    // Load practice areas from API
+    fetch("/api/practice-areas")
+      .then((res) => res.json())
+      .then((data) => {
+        // Take first 3 practice areas
+        setPracticeAreas(data.practiceAreas.slice(0, 3));
+      })
+      .catch((err) => console.error("Failed to load practice areas:", err));
+
+    // Load FAQs from API
+    fetch("/api/faqs")
+      .then((res) => res.json())
+      .then((data) => {
+        setFaqs(data.faqs.slice(0, 6)); // Show first 6 FAQs
+      })
+      .catch((err) => console.error("Failed to load FAQs:", err));
+  }, []);
 
   const handleSplashComplete = () => {
     setShowSplash(false);
@@ -76,16 +105,20 @@ export default function HomePage() {
                 institutions worldwide.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663] px-8 py-6 text-base">
-                  Schedule Consultation
-                  <ArrowRight className="ml-2" size={20} />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-[#2C3E5F] text-[#F2F2F2] hover:bg-[#0C1F3A] px-8 py-6 text-base bg-transparent"
-                >
-                  Our Services
-                </Button>
+                <Link href="/contact">
+                  <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663] px-8 py-6 text-base">
+                    Schedule Consultation
+                    <ArrowRight className="ml-2" size={20} />
+                  </Button>
+                </Link>
+                <Link href="/services">
+                  <Button
+                    variant="outline"
+                    className="border-[#2C3E5F] text-[#F2F2F2] hover:bg-[#0C1F3A] px-8 py-6 hover:text-shadow-amber-500  bg-transparent"
+                  >
+                    Our Services
+                  </Button>
+                </Link>
               </div>
             </motion.div>
 
@@ -175,54 +208,161 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Corporate Law",
-                description:
-                  "Strategic counsel for businesses navigating complex corporate transactions and compliance.",
-                image: "/modern-corporate-boardroom.png",
-              },
-              {
-                title: "Intellectual Property",
-                description:
-                  "Protection and enforcement of patents, trademarks, and copyrights in the global marketplace.",
-                image: "/intellectual-property-patents.jpg",
-              },
-              {
-                title: "Litigation",
-                description:
-                  "Aggressive representation in courtrooms with a track record of favorable outcomes.",
-                image: "/professional-courtroom.jpg",
-              },
-            ].map((area, index) => (
+            {practiceAreas.length > 0
+              ? practiceAreas.map((area, index) => (
+                  <Link key={area.id} href={`/practice-areas/${area.slug}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer h-full"
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={area.image || "/placeholder.svg"}
+                          alt={area.title}
+                          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3A] to-transparent" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
+                          {area.title}
+                        </h3>
+                        <p className="text-[#C7CBD1] mb-4 leading-relaxed line-clamp-3">
+                          {area.description}
+                        </p>
+                        <Button
+                          variant="link"
+                          className="text-[#C6B27E] p-0 h-auto"
+                        >
+                          Learn More <ArrowRight className="ml-2" size={16} />
+                        </Button>
+                      </div>
+                    </motion.div>
+                  </Link>
+                ))
+              : // Fallback to static content if API fails
+                [
+                  {
+                    title: "Corporate Law",
+                    description:
+                      "Strategic counsel for businesses navigating complex corporate transactions and compliance.",
+                    image: "/modern-corporate-boardroom.png",
+                  },
+                  {
+                    title: "Intellectual Property",
+                    description:
+                      "Protection and enforcement of patents, trademarks, and copyrights in the global marketplace.",
+                    image: "/intellectual-property-patents.jpg",
+                  },
+                  {
+                    title: "Litigation",
+                    description:
+                      "Aggressive representation in courtrooms with a track record of favorable outcomes.",
+                    image: "/professional-courtroom.jpg",
+                  },
+                ].map((area, index) => (
+                  <motion.div
+                    key={area.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={area.image || "/placeholder.svg"}
+                        alt={area.title}
+                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3A] to-transparent" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
+                        {area.title}
+                      </h3>
+                      <p className="text-[#C7CBD1] mb-4 leading-relaxed">
+                        {area.description}
+                      </p>
+                      <Button
+                        variant="link"
+                        className="text-[#C6B27E] p-0 h-auto"
+                      >
+                        Learn More <ArrowRight className="ml-2" size={16} />
+                      </Button>
+                    </div>
+                  </motion.div>
+                ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-t border-[#2C3E5F]">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
+              FREQUENTLY ASKED QUESTIONS
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
+              Common Questions
+            </h2>
+            <p className="text-[#C7CBD1] max-w-2xl mx-auto text-pretty">
+              Find answers to common questions about our services and how we can
+              help you.
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
               <motion.div
-                key={area.title}
+                key={faq.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer"
+                className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden"
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={area.image || "/placeholder.svg"}
-                    alt={area.title}
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3A] to-transparent" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
-                    {area.title}
+                <button
+                  onClick={() =>
+                    setOpenFaqId(openFaqId === faq.id ? null : faq.id)
+                  }
+                  className="w-full text-left p-6 flex items-center justify-between hover:bg-[#071731]/50 transition-colors"
+                >
+                  <h3 className="font-serif text-lg font-semibold text-[#F2F2F2] pr-8">
+                    {faq.question}
                   </h3>
-                  <p className="text-[#C7CBD1] mb-4 leading-relaxed">
-                    {area.description}
-                  </p>
-                  <Button variant="link" className="text-[#C6B27E] p-0 h-auto">
-                    Learn More <ArrowRight className="ml-2" size={16} />
-                  </Button>
-                </div>
+                  <ChevronDown
+                    className={`w-5 h-5 text-[#C6B27E] transition-transform flex-shrink-0 ${
+                      openFaqId === faq.id ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <AnimatePresence>
+                  {openFaqId === faq.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 text-[#C7CBD1] leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
@@ -244,10 +384,12 @@ export default function HomePage() {
               Our experienced attorneys are ready to provide the expert guidance
               you deserve.
             </p>
-            <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663] px-8 py-6 text-lg">
-              Schedule a Consultation
-              <ArrowRight className="ml-2" size={20} />
-            </Button>
+            <Link href="/contact">
+              <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663] px-8 py-6 text-lg">
+                Schedule a Consultation
+                <ArrowRight className="ml-2" size={20} />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

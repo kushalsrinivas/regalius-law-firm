@@ -76,11 +76,21 @@ export default function ContactsPage() {
     return <div className="text-heading">Loading contacts...</div>;
   }
 
+  const careerApplications = contacts.filter(c => c.inquiryType.startsWith('Career Application'));
+  const regularContacts = contacts.filter(c => !c.inquiryType.startsWith('Career Application'));
+
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-serif text-4xl font-bold text-heading mb-2">Contact Requests</h1>
-        <p className="text-body-copy">{contacts.length} total submissions</p>
+        <h1 className="font-serif text-4xl font-bold text-heading mb-2">Contact Requests & Applications</h1>
+        <p className="text-body-copy">
+          {contacts.length} total submissions 
+          {careerApplications.length > 0 && (
+            <span className="ml-2">
+              ({careerApplications.length} career application{careerApplications.length !== 1 ? 's' : ''}, {regularContacts.length} contact{regularContacts.length !== 1 ? 's' : ''})
+            </span>
+          )}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -123,8 +133,8 @@ export default function ContactsPage() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-4 text-sm text-body-copy mb-3">
-                  <span className="flex items-center gap-1">
+                <div className="flex items-center gap-4 text-sm text-body-copy mb-3 flex-wrap">
+                  <span className={`flex items-center gap-1 ${contact.inquiryType.startsWith('Career Application') ? 'text-[#C6B27E] font-medium' : ''}`}>
                     <Mail size={14} />
                     {contact.inquiryType}
                   </span>
@@ -181,8 +191,10 @@ export default function ContactsPage() {
                   </div>
 
                   <div>
-                    <label className="text-sm text-body-copy">Message</label>
-                    <p className="text-heading">{selectedContact.message}</p>
+                    <label className="text-sm text-body-copy">
+                      {selectedContact.inquiryType.startsWith('Career Application') ? 'Application Details' : 'Message'}
+                    </label>
+                    <p className="text-heading whitespace-pre-line">{selectedContact.message}</p>
                   </div>
 
                   <div>

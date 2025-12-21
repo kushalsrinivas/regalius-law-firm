@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Mail, FileText, TrendingUp, Eye, Users } from "lucide-react";
+import { Mail, FileText, TrendingUp, Eye, Users, Briefcase, Cog, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Stats {
@@ -13,6 +13,12 @@ interface Stats {
   publishedBlogs: number;
   totalAttorneys: number;
   activeAttorneys: number;
+  totalPracticeAreas: number;
+  activePracticeAreas: number;
+  totalServices: number;
+  activeServices: number;
+  totalFAQs: number;
+  activeFAQs: number;
 }
 
 export default function AdminDashboard() {
@@ -23,6 +29,12 @@ export default function AdminDashboard() {
     publishedBlogs: 0,
     totalAttorneys: 0,
     activeAttorneys: 0,
+    totalPracticeAreas: 0,
+    activePracticeAreas: 0,
+    totalServices: 0,
+    activeServices: 0,
+    totalFAQs: 0,
+    activeFAQs: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -32,16 +44,22 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      const [contactsRes, blogsRes, attorneysRes] = await Promise.all([
+      const [contactsRes, blogsRes, attorneysRes, practiceAreasRes, servicesRes, faqsRes] = await Promise.all([
         fetch("/api/contacts"),
         fetch("/api/blogs?includeDrafts=true"),
         fetch("/api/attorneys?includeInactive=true"),
+        fetch("/api/practice-areas?includeInactive=true"),
+        fetch("/api/services?includeInactive=true"),
+        fetch("/api/faqs?includeInactive=true"),
       ]);
 
-      if (contactsRes.ok && blogsRes.ok && attorneysRes.ok) {
+      if (contactsRes.ok && blogsRes.ok && attorneysRes.ok && practiceAreasRes.ok && servicesRes.ok && faqsRes.ok) {
         const contactsData = await contactsRes.json();
         const blogsData = await blogsRes.json();
         const attorneysData = await attorneysRes.json();
+        const practiceAreasData = await practiceAreasRes.json();
+        const servicesData = await servicesRes.json();
+        const faqsData = await faqsRes.json();
 
         setStats({
           totalContacts: contactsData.contacts.length,
@@ -50,6 +68,12 @@ export default function AdminDashboard() {
           publishedBlogs: blogsData.blogs.filter((b: any) => b.status === "published").length,
           totalAttorneys: attorneysData.attorneys.length,
           activeAttorneys: attorneysData.attorneys.filter((a: any) => a.status === "active").length,
+          totalPracticeAreas: practiceAreasData.practiceAreas.length,
+          activePracticeAreas: practiceAreasData.practiceAreas.filter((p: any) => p.status === "active").length,
+          totalServices: servicesData.services.length,
+          activeServices: servicesData.services.filter((s: any) => s.status === "active").length,
+          totalFAQs: faqsData.faqs.length,
+          activeFAQs: faqsData.faqs.filter((f: any) => f.status === "active").length,
         });
       }
     } catch (error) {
@@ -84,6 +108,30 @@ export default function AdminDashboard() {
       color: "text-purple-500",
       href: "/admin/attorneys",
     },
+    {
+      title: "Practice Areas",
+      value: stats.totalPracticeAreas,
+      subtitle: `${stats.activePracticeAreas} active`,
+      icon: Briefcase,
+      color: "text-orange-500",
+      href: "/admin/practice-areas",
+    },
+    {
+      title: "Services",
+      value: stats.totalServices,
+      subtitle: `${stats.activeServices} active`,
+      icon: Cog,
+      color: "text-cyan-500",
+      href: "/admin/services",
+    },
+    {
+      title: "FAQs",
+      value: stats.totalFAQs,
+      subtitle: `${stats.activeFAQs} active`,
+      icon: HelpCircle,
+      color: "text-yellow-500",
+      href: "/admin/faqs",
+    },
   ];
 
   if (loading) {
@@ -98,7 +146,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {statCards.map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -143,6 +191,33 @@ export default function AdminDashboard() {
                 >
                   <Users className="mr-2" size={18} />
                   Add New Attorney
+                </Button>
+              </Link>
+              <Link href="/admin/practice-areas/new">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start border-border text-heading hover:bg-surface-raised"
+                >
+                  <Briefcase className="mr-2" size={18} />
+                  Add Practice Area
+                </Button>
+              </Link>
+              <Link href="/admin/services/new">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start border-border text-heading hover:bg-surface-raised"
+                >
+                  <Cog className="mr-2" size={18} />
+                  Add Service
+                </Button>
+              </Link>
+              <Link href="/admin/faqs">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start border-border text-heading hover:bg-surface-raised"
+                >
+                  <HelpCircle className="mr-2" size={18} />
+                  Manage FAQs
                 </Button>
               </Link>
               <Link href="/admin/contacts">

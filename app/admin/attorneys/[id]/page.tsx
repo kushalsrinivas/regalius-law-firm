@@ -21,6 +21,7 @@ export default function AttorneyEditorPage() {
     experience: "",
     email: "",
     phone: "",
+    linkedin: "",
     photo: "",
     bio: "",
     practiceAreas: [""],
@@ -52,6 +53,7 @@ export default function AttorneyEditorPage() {
           experience: data.attorney.experience,
           email: data.attorney.email,
           phone: data.attorney.phone,
+          linkedin: data.attorney.linkedin || "",
           photo: data.attorney.photo,
           bio: data.attorney.bio,
           practiceAreas: data.attorney.practiceAreas,
@@ -250,6 +252,19 @@ export default function AttorneyEditorPage() {
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-heading mb-2">
+                  LinkedIn URL
+                </label>
+                <input
+                  type="url"
+                  value={form.linkedin}
+                  onChange={(e) => setForm((prev) => ({ ...prev, linkedin: e.target.value }))}
+                  className="w-full px-4 py-3 bg-form-bg text-body-copy border border-border rounded-sm focus:outline-none focus:border-highlight"
+                  placeholder="https://www.linkedin.com/in/username"
+                />
               </div>
 
               <div>

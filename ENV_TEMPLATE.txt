@@ -1,0 +1,35 @@
+# ========================================
+# ENVIRONMENT VARIABLES TEMPLATE
+# ========================================
+# Copy this and create a file named: .env.local
+# (in the same folder as package.json)
+# ========================================
+
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+JWT_SECRET=regalius-law-secret-jwt-key-2024
+
+# ========================================
+# WHERE TO GET THESE VALUES:
+# ========================================
+# 
+# 1. Go to https://supabase.com
+# 2. Sign in and open your project
+# 3. Click Settings (gear icon) → API
+# 4. Copy "Project URL" → use for NEXT_PUBLIC_SUPABASE_URL
+# 5. Copy "anon public" key → use for NEXT_PUBLIC_SUPABASE_ANON_KEY
+# 6. Copy "service_role" key → use for SUPABASE_SERVICE_ROLE_KEY (KEEP THIS SECRET!)
+# 7. JWT_SECRET can be any random string (keep it secret!)
+#
+# ========================================
+# EXAMPLE:
+# ========================================
+#
+# NEXT_PUBLIC_SUPABASE_URL=https://xyzabcdef.supabase.co
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# JWT_SECRET=my-super-secret-key-12345
+#
+# ========================================
+

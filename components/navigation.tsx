@@ -13,6 +13,7 @@ const navItems = [
   { name: "Services", href: "/services" },
   { name: "Blogs", href: "/blogs" },
   { name: "Offices", href: "/offices" },
+  { name: "Careers", href: "/careers" },
 ]
 
 export function Navigation() {

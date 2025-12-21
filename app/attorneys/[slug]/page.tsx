@@ -13,6 +13,7 @@ import {
   Globe,
   ArrowLeft,
   Calendar,
+  Linkedin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
@@ -28,6 +29,7 @@ interface Attorney {
   experience: string;
   email: string;
   phone: string;
+  linkedin?: string;
   photo: string;
   bio: string;
   practiceAreas: string[];
@@ -299,6 +301,23 @@ export default function AttorneyProfilePage() {
                         {attorney.phone}
                       </a>
                     </div>
+
+                    {attorney.linkedin && (
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <Linkedin className="text-[#C6B27E]" size={20} />
+                          <span className="text-sm text-[#C7CBD1] font-medium">LinkedIn</span>
+                        </div>
+                        <a
+                          href={attorney.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#F2F2F2] hover:text-[#C6B27E] transition-colors block pl-8 break-all"
+                        >
+                          View Profile
+                        </a>
+                      </div>
+                    )}
 
                     <div>
                       <div className="flex items-center gap-3 mb-2">
