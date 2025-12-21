@@ -1,33 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-import type { FAQ } from "@/lib/data";
-
-const faqsFilePath = path.join(process.cwd(), "data", "faqs.json");
-
-async function readFAQs() {
-  try {
-    const fileContent = await fs.readFile(faqsFilePath, "utf-8");
-    const data = JSON.parse(fileContent);
-    return data.faqs || [];
-  } catch (error) {
-    console.error("Error reading FAQs:", error);
-    return [];
-  }
-}
-
-async function writeFAQs(faqs: FAQ[]) {
-  try {
-    await fs.writeFile(
-      faqsFilePath,
-      JSON.stringify({ faqs }, null, 2),
-      "utf-8"
-    );
-  } catch (error) {
-    console.error("Error writing FAQs:", error);
-    throw error;
-  }
-}
+import { db, type FAQ } from "@/lib/db";
 
 export async function GET(
   request: NextRequest,
@@ -35,8 +7,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const faqs = await readFAQs();
-    const faq = faqs.find((f: FAQ) => f.id === id);
+    const faq = db.faqs.getById(id);
 
     if (!faq) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
@@ -59,22 +30,12 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const faqs = await readFAQs();
-    const index = faqs.findIndex((f: FAQ) => f.id === id);
 
-    if (index === -1) {
+    const updatedFAQ = db.faqs.update(id, body);
+
+    if (!updatedFAQ) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
     }
-
-    const updatedFAQ: FAQ = {
-      ...faqs[index],
-      ...body,
-      id: id,
-      updatedAt: new Date().toISOString(),
-    };
-
-    faqs[index] = updatedFAQ;
-    await writeFAQs(faqs);
 
     return NextResponse.json({ faq: updatedFAQ });
   } catch (error) {
@@ -92,15 +53,11 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const faqs = await readFAQs();
-    const index = faqs.findIndex((f: FAQ) => f.id === id);
+    const success = db.faqs.delete(id);
 
-    if (index === -1) {
+    if (!success) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
     }
-
-    faqs.splice(index, 1);
-    await writeFAQs(faqs);
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -111,4 +68,3 @@ export async function DELETE(
     );
   }
 }
-
