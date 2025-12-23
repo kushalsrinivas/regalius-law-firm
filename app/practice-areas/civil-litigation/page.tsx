@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Navigation } from "@/components/navigation"
-import Footer from "@/components/Footer"
-import { Scale, CheckCircle, FileText, Gavel, ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion";
+import { Navigation } from "@/components/navigation";
+import Footer from "@/components/Footer";
+import { Scale, CheckCircle, FileText, Gavel, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function CivilLitigationPage() {
   const typesOfMatters = [
@@ -16,34 +16,38 @@ export default function CivilLitigationPage() {
     "Partition Suits",
     "Breach of Contract Claims",
     "Tort Claims & Damages",
-    "Partnership Disputes"
-  ]
+    "Partnership Disputes",
+  ];
 
   const courtsJurisdictions = [
     "Karnataka High Court - Original & Appellate Side",
     "City Civil Court, Bangalore",
     "District Courts across Karnataka",
-    "Supreme Court of India (Appeals)"
-  ]
+    "Supreme Court of India (Appeals)",
+  ];
 
   const legalProcess = [
     {
       title: "Case Assessment",
-      description: "Detailed evaluation of your civil dispute, documentation review, and viability analysis."
+      description:
+        "Detailed evaluation of your civil dispute, documentation review, and viability analysis.",
     },
     {
       title: "Legal Strategy",
-      description: "Crafting a comprehensive litigation strategy aligned with your objectives and timelines."
+      description:
+        "Crafting a comprehensive litigation strategy aligned with your objectives and timelines.",
     },
     {
       title: "Court Proceedings",
-      description: "Expert representation at trial courts and High Court with meticulous preparation."
+      description:
+        "Expert representation at trial courts and High Court with meticulous preparation.",
     },
     {
       title: "Appeals & Execution",
-      description: "Pursuing appeals when necessary and executing favorable judgments efficiently."
-    }
-  ]
+      description:
+        "Pursuing appeals when necessary and executing favorable judgments efficiently.",
+    },
+  ];
 
   const whyChooseUs = [
     "Deep expertise in Karnataka High Court civil litigation",
@@ -51,8 +55,8 @@ export default function CivilLitigationPage() {
     "Strategic approach combining legal rigor with commercial awareness",
     "Transparent communication and realistic case assessment",
     "End-to-end litigation support from trial to appeal",
-    "Strong focus on alternative dispute resolution when beneficial"
-  ]
+    "Strong focus on alternative dispute resolution when beneficial",
+  ];
 
   return (
     <div className="min-h-screen bg-[#071731]">
@@ -74,9 +78,11 @@ export default function CivilLitigationPage() {
               Civil Litigation Lawyer in Bangalore
             </h1>
             <p className="text-[#C7CBD1] text-xl leading-relaxed mb-8">
-              Expert civil litigation lawyers in Bangalore representing clients in property disputes, 
-              contract breaches, recovery matters, and civil appeals before Karnataka High Court and 
-              trial courts. Strategic advocacy for favorable outcomes in complex civil litigation.
+              Expert civil litigation lawyers in Bangalore representing clients
+              in property disputes, contract breaches, recovery matters, and
+              civil appeals before Karnataka High Court and trial courts.
+              Strategic advocacy for favorable outcomes in complex civil
+              litigation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/contact">
@@ -113,15 +119,17 @@ export default function CivilLitigationPage() {
                 Civil Litigation Services
               </h2>
               <p className="text-[#C7CBD1] text-lg leading-relaxed mb-6">
-                Regalius Law Partners is a leading civil litigation law firm in Bangalore with extensive 
-                experience handling complex civil disputes before the Karnataka High Court, City Civil Courts, 
-                and District Courts across Karnataka.
+                Regalius Law Partners is a leading civil litigation law firm in
+                Bangalore with extensive experience handling complex civil
+                disputes before the Karnataka High Court, City Civil Courts, and
+                District Courts across Karnataka.
               </p>
               <p className="text-[#C7CBD1] text-lg leading-relaxed">
-                Our civil litigation practice encompasses property disputes, contract enforcement, recovery 
-                matters, and all forms of civil claims. We combine deep legal expertise with strategic 
-                thinking to protect our clients' interests and achieve favorable outcomes through litigation 
-                or negotiated settlements.
+                Our civil litigation practice encompasses property disputes,
+                contract enforcement, recovery matters, and all forms of civil
+                claims. We combine deep legal expertise with strategic thinking
+                to protect our clients' interests and achieve favorable outcomes
+                through litigation or negotiated settlements.
               </p>
             </motion.div>
 
@@ -172,7 +180,8 @@ export default function CivilLitigationPage() {
               Courts & Jurisdiction
             </h2>
             <p className="text-[#C7CBD1] max-w-3xl mx-auto text-lg">
-              Our civil litigation team regularly appears before various courts in Karnataka and beyond.
+              Our civil litigation team regularly appears before various courts
+              in Karnataka and beyond.
             </p>
           </motion.div>
 
@@ -223,7 +232,7 @@ export default function CivilLitigationPage() {
                 className="bg-[#071731] border border-[#2C3E5F] rounded-lg p-6"
               >
                 <div className="text-5xl font-serif font-bold text-[#C6B27E] mb-4 opacity-30">
-                  {(index + 1).toString().padStart(2, '0')}
+                  {(index + 1).toString().padStart(2, "0")}
                 </div>
                 <h3 className="font-serif text-xl font-bold text-[#F2F2F2] mb-3">
                   {step.title}
@@ -254,10 +263,11 @@ export default function CivilLitigationPage() {
                 Why Choose Regalius Law Partners
               </h2>
               <p className="text-[#C7CBD1] text-lg leading-relaxed mb-8">
-                As one of Bangalore's leading civil litigation law firms, we bring decades of combined 
-                experience in handling complex civil disputes with a proven track record of success.
+                As one of Bangalore's leading civil litigation law firms, we
+                bring decades of combined experience in handling complex civil
+                disputes with a proven track record of success.
               </p>
-              
+
               <div className="space-y-4">
                 {whyChooseUs.map((reason, index) => (
                   <motion.div
@@ -306,8 +316,9 @@ export default function CivilLitigationPage() {
               Need a Civil Litigation Lawyer in Bangalore?
             </h2>
             <p className="text-[#C7CBD1] text-lg mb-8 text-pretty">
-              Consult with our experienced civil litigation advocates for strategic representation 
-              in Karnataka High Court and trial courts across Bangalore.
+              Consult with our experienced civil litigation advocates for
+              strategic representation in Karnataka High Court and trial courts
+              across Bangalore.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact">
@@ -331,6 +342,5 @@ export default function CivilLitigationPage() {
 
       <Footer />
     </div>
-  )
+  );
 }
-
