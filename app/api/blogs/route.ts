@@ -26,10 +26,10 @@ export async function GET(request: NextRequest) {
     let blogs;
     if (includeDrafts && session) {
       // Admin can see all blogs
-      blogs = db.blogs.getAll();
+      blogs = await db.blogs.getAll();
     } else {
       // Public only sees published blogs
-      blogs = db.blogs.getPublished();
+      blogs = await db.blogs.getPublished();
     }
 
     return NextResponse.json({ blogs });
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists
-    const existing = db.blogs.getBySlug(slug);
+    const existing = await db.blogs.getBySlug(slug);
     if (existing) {
       return NextResponse.json(
         { error: 'A blog with this title already exists' },
@@ -78,11 +78,11 @@ export async function POST(request: NextRequest) {
     // Calculate read time if not provided
     const readTime = validation.data.readTime || calculateReadTime(validation.data.content);
 
-    const blog = db.blogs.create({
+    const blog = await db.blogs.create({
       ...validation.data,
       slug,
       readTime,
-      publishedAt: validation.data.status === 'published' ? new Date().toISOString() : undefined,
+      publishedAt: validation.data.status === 'published' ? new Date() : undefined,
     });
 
     return NextResponse.json({ success: true, blog });

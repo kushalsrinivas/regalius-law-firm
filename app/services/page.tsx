@@ -148,8 +148,8 @@ export default function ServicesPage() {
                     key={service.id}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: 0.2 + (index % 2) * 0.15 }}
                     className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group hover:border-[#C6B27E]/50 transition-all cursor-pointer"
                   >
                     <Link href={`/service-details/${service.slug}`}>
@@ -201,8 +201,8 @@ export default function ServicesPage() {
                   key={service.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.2 + (index % 2) * 0.15 }}
                   className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden"
                 >
                   <div className={`grid lg:grid-cols-2 gap-0 ${index % 2 === 1 ? "lg:grid-flow-dense" : ""}`}>
@@ -244,7 +244,8 @@ export default function ServicesPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">OUR APPROACH</div>
@@ -273,8 +274,8 @@ export default function ServicesPage() {
                 key={process.step}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
                 className="text-center"
               >
                 <div className="text-5xl font-serif font-bold text-[#C6B27E] mb-4 opacity-30">{process.step}</div>
@@ -289,7 +290,12 @@ export default function ServicesPage() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6 text-balance">
               Ready to Get Started?
             </h2>

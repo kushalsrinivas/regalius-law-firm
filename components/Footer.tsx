@@ -83,11 +83,11 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li className="flex items-center gap-3 text-body-copy text-sm">
                   <Phone size={16} className="text-highlight" />
-                  <span>+91 (00000) 00000</span>
+                  <span>9740331263</span>
                 </li>
                 <li className="flex items-center gap-3 text-body-copy text-sm">
                   <Mail size={16} className="text-highlight" />
-                  <span>contact@regaliuslaw.com</span>
+                  <span>office.blr@regaliuslawpartners.com</span>
                 </li>
                 <li className="flex items-start gap-3 text-body-copy text-sm">
                   <MapPin size={16} className="text-highlight mt-1" />

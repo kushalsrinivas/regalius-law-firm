@@ -118,3 +118,5 @@ Once you disable RLS and restart, everything should work:
 
 **Just run that SQL in Supabase, restart your server, and you're done!** 🎉
 
+
+

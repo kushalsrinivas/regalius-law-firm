@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const includeInactive = url.searchParams.get("includeInactive") === "true";
     const category = url.searchParams.get("category");
 
-    let faqs = includeInactive ? db.faqs.getAll() : db.faqs.getActive();
+    let faqs = includeInactive ? await db.faqs.getAll() : await db.faqs.getActive();
 
     // Filter by category
     if (category) {
@@ -27,9 +27,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const allFaqs = db.faqs.getAll();
+    const allFaqs = await db.faqs.getAll();
 
-    const newFAQ = db.faqs.create({
+    const newFAQ = await db.faqs.create({
       question: body.question,
       answer: body.answer,
       category: body.category || "General",

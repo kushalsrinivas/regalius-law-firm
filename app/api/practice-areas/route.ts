@@ -25,10 +25,10 @@ export async function GET(request: NextRequest) {
     let practiceAreas;
     if (includeInactive && session) {
       // Admin can see all practice areas
-      practiceAreas = db.practiceAreas.getAll();
+      practiceAreas = await db.practiceAreas.getAll();
     } else {
       // Public only sees active practice areas
-      practiceAreas = db.practiceAreas.getActive();
+      practiceAreas = await db.practiceAreas.getActive();
     }
 
     return NextResponse.json({ practiceAreas });
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists
-    const existing = db.practiceAreas.getBySlug(slug);
+    const existing = await db.practiceAreas.getBySlug(slug);
     if (existing) {
       return NextResponse.json(
         { error: 'A practice area with this title already exists' },
@@ -75,11 +75,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the highest order number and add 1
-    const allAreas = db.practiceAreas.getAll();
+    const allAreas = await db.practiceAreas.getAll();
     const maxOrder = allAreas.length > 0 ? Math.max(...allAreas.map(a => a.order)) : 0;
     const order = validation.data.order ?? maxOrder + 1;
 
-    const practiceArea = db.practiceAreas.create({
+    const practiceArea = await db.practiceAreas.create({
       ...validation.data,
       slug,
       order,

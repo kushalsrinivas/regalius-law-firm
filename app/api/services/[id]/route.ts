@@ -22,7 +22,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const service = db.services.getById(id);
+    const service = await db.services.getById(parseInt(id));
     
     if (!service) {
       return NextResponse.json(
@@ -70,15 +70,15 @@ export async function PATCH(
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists (excluding current service)
-    const existing = db.services.getBySlug(slug);
-    if (existing && existing.id !== id) {
+    const existing = await db.services.getBySlug(slug);
+    if (existing && existing.id !== parseInt(id)) {
       return NextResponse.json(
         { error: 'A service with this title already exists' },
         { status: 400 }
       );
     }
 
-    const service = db.services.update(id, {
+    const service = await db.services.update(parseInt(id), {
       ...validation.data,
       slug,
     });
@@ -112,7 +112,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const success = db.services.delete(id);
+    const success = await db.services.delete(parseInt(id));
     
     if (!success) {
       return NextResponse.json(

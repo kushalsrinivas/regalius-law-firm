@@ -83,3 +83,5 @@ if (!hasIssues) {
   console.log('Found issues! Fix them in .env.local and restart your dev server.');
 }
 
+
+

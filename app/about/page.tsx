@@ -69,8 +69,8 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">About Us</h2>
               <p className="text-[#C7CBD1] leading-relaxed mb-4">
@@ -84,8 +84,8 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               className="relative h-[500px] rounded-lg overflow-hidden border border-[#2C3E5F]"
             >
               <img
@@ -105,7 +105,8 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">OUR CORE VALUES</div>
@@ -139,8 +140,8 @@ export default function AboutPage() {
                 key={value.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
                 className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg p-8 text-center"
               >
                 <value.icon className="w-12 h-12 mx-auto mb-4 text-[#C6B27E]" />
@@ -158,7 +159,8 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">MEET OUR TEAM</div>
@@ -179,8 +181,8 @@ export default function AboutPage() {
                   key={attorney.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                   className="group"
                 >
                   <Link href={`/attorneys/${attorney.slug}`}>
@@ -217,7 +219,12 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6 text-balance">
               Join Our Distinguished Clientele
             </h2>

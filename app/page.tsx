@@ -31,6 +31,49 @@ const heroImages = [
   "/hero.png",
 ];
 
+// Counter component for stats
+function StatCounter({ icon: Icon, value, suffix, label, index }: any) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, delay: 0.2 + index * 0.15 }}
+      onViewportEnter={() => {
+        if (!hasAnimated) {
+          setHasAnimated(true);
+          const duration = 2000; // 2 seconds
+          const steps = 60;
+          const increment = value / steps;
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= value) {
+              setCount(value);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+
+          return () => clearInterval(timer);
+        }
+      }}
+      className="text-center"
+    >
+      <Icon className="w-12 h-12 mx-auto mb-4 text-[#C6B27E]" />
+      <div className="text-4xl font-bold text-[#F2F2F2] mb-2">
+        {count}{suffix}
+      </div>
+      <div className="text-[#C7CBD1] text-sm">{label}</div>
+    </motion.div>
+  );
+}
+
 export default function HomePage() {
   const [showSplash, setShowSplash] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -162,25 +205,19 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Scale, value: "50+", label: "Cases Won" },
-              { icon: Users, value: "100+", label: "Satisfied Clients" },
-              { icon: Award, value: "5", label: "Awards Received" },
-              { icon: Globe, value: "100%", label: "Legal Way" },
+              { icon: Scale, value: 50, suffix: "+", label: "Cases Won" },
+              { icon: Users, value: 100, suffix: "+", label: "Satisfied Clients" },
+              { icon: Award, value: 5, suffix: "", label: "Awards Received" },
+              { icon: Globe, value: 100, suffix: "%", label: "Legal Way" },
             ].map((stat, index) => (
-              <motion.div
+              <StatCounter
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <stat.icon className="w-12 h-12 mx-auto mb-4 text-[#C6B27E]" />
-                <div className="text-4xl font-bold text-[#F2F2F2] mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-[#C7CBD1] text-sm">{stat.label}</div>
-              </motion.div>
+                icon={stat.icon}
+                value={stat.value}
+                suffix={stat.suffix}
+                label={stat.label}
+                index={index}
+              />
             ))}
           </div>
         </div>
@@ -192,7 +229,8 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
@@ -214,8 +252,8 @@ export default function HomePage() {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
                       whileHover={{ y: -5 }}
                       className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer h-full"
                     >
@@ -269,8 +307,8 @@ export default function HomePage() {
                     key={area.title}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
                     whileHover={{ y: -5 }}
                     className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer"
                   >
@@ -308,7 +346,8 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
@@ -329,8 +368,8 @@ export default function HomePage() {
                 key={faq.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                 className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden"
               >
                 <button
@@ -375,7 +414,8 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6 text-balance">
               Ready to Discuss Your Legal Needs?

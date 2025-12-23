@@ -9,6 +9,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key-here
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 JWT_SECRET=regalius-law-secret-jwt-key-2024
+POSTGRES_URL=postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-ID].supabase.co:5432/postgres
 
 # ========================================
 # WHERE TO GET THESE VALUES:
@@ -21,6 +22,8 @@ JWT_SECRET=regalius-law-secret-jwt-key-2024
 # 5. Copy "anon public" key → use for NEXT_PUBLIC_SUPABASE_ANON_KEY
 # 6. Copy "service_role" key → use for SUPABASE_SERVICE_ROLE_KEY (KEEP THIS SECRET!)
 # 7. JWT_SECRET can be any random string (keep it secret!)
+# 8. For POSTGRES_URL: Settings → Database → Connection String (Transaction mode)
+#    Replace [YOUR-PASSWORD] with your database password
 #
 # ========================================
 # EXAMPLE:

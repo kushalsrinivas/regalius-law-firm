@@ -33,10 +33,10 @@ export async function GET(request: NextRequest) {
     let attorneys;
     if (includeInactive && session) {
       // Admin can see all attorneys
-      attorneys = db.attorneys.getAll();
+      attorneys = await db.attorneys.getAll();
     } else {
       // Public only sees active attorneys
-      attorneys = db.attorneys.getActive();
+      attorneys = await db.attorneys.getActive();
     }
 
     return NextResponse.json({ attorneys });
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists
-    const existing = db.attorneys.getBySlug(slug);
+    const existing = await db.attorneys.getBySlug(slug);
     if (existing) {
       return NextResponse.json(
         { error: 'An attorney with this name already exists' },
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const attorney = db.attorneys.create({
+    const attorney = await db.attorneys.create({
       ...validation.data,
       slug,
     });

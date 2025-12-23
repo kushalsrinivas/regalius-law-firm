@@ -20,7 +20,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const practiceArea = db.practiceAreas.getById(id);
+    const practiceArea = await db.practiceAreas.getById(parseInt(id));
     
     if (!practiceArea) {
       return NextResponse.json(
@@ -68,15 +68,15 @@ export async function PATCH(
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists (excluding current practice area)
-    const existing = db.practiceAreas.getBySlug(slug);
-    if (existing && existing.id !== id) {
+    const existing = await db.practiceAreas.getBySlug(slug);
+    if (existing && existing.id !== parseInt(id)) {
       return NextResponse.json(
         { error: 'A practice area with this title already exists' },
         { status: 400 }
       );
     }
 
-    const practiceArea = db.practiceAreas.update(id, {
+    const practiceArea = await db.practiceAreas.update(parseInt(id), {
       ...validation.data,
       slug,
     });
@@ -110,7 +110,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const success = db.practiceAreas.delete(id);
+    const success = await db.practiceAreas.delete(parseInt(id));
     
     if (!success) {
       return NextResponse.json(

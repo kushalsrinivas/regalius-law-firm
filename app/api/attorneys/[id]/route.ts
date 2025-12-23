@@ -28,7 +28,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const attorney = db.attorneys.getById(id);
+    const attorney = await db.attorneys.getById(parseInt(id));
 
     if (!attorney) {
       return NextResponse.json({ error: 'Attorney not found' }, { status: 404 });
@@ -72,7 +72,7 @@ export async function PATCH(
       );
     }
 
-    const updated = db.attorneys.update(id, validation.data);
+    const updated = await db.attorneys.update(parseInt(id), validation.data);
     if (!updated) {
       return NextResponse.json({ error: 'Attorney not found' }, { status: 404 });
     }
@@ -99,7 +99,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const deleted = db.attorneys.delete(id);
+    const deleted = await db.attorneys.delete(parseInt(id));
 
     if (!deleted) {
       return NextResponse.json({ error: 'Attorney not found' }, { status: 404 });

@@ -72,3 +72,5 @@ You can access the admin panel at:
 
 **Note:** This is a temporary workaround. The full application requires Supabase to be properly configured for all features to work.
 
+
+

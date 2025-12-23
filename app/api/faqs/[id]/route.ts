@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const faq = db.faqs.getById(id);
+    const faq = await db.faqs.getById(parseInt(id));
 
     if (!faq) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
@@ -31,7 +31,7 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
 
-    const updatedFAQ = db.faqs.update(id, body);
+    const updatedFAQ = await db.faqs.update(parseInt(id), body);
 
     if (!updatedFAQ) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
@@ -53,7 +53,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const success = db.faqs.delete(id);
+    const success = await db.faqs.delete(parseInt(id));
 
     if (!success) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });

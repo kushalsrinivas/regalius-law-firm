@@ -63,3 +63,5 @@ console.log('1. Restart your dev server: npm run dev');
 console.log('2. Test: http://localhost:3000/api/attorneys');
 console.log('\nThe permission error should be gone! 🎉');
 
+
+

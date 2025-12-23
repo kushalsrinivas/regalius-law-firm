@@ -89,9 +89,9 @@ export default function ContactPage() {
                       Prefer email?{" "}
                       <a
                         className="relative text-highlight hover:text-highlight-dark transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:bg-highlight after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100"
-                        href="mailto:contact@regaliuslaw.com"
+                        href="mailto:office.blr@regaliuslawpartners.com"
                       >
-                        contact@regaliuslaw.com
+                        office.blr@regaliuslawpartners.com
                       </a>
                     </p>
                   </div>

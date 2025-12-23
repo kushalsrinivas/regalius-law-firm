@@ -27,10 +27,10 @@ export async function GET(request: NextRequest) {
     let services;
     if (includeInactive && session) {
       // Admin can see all services
-      services = db.services.getAll();
+      services = await db.services.getAll();
     } else {
       // Public only sees active services
-      services = db.services.getActive();
+      services = await db.services.getActive();
     }
 
     return NextResponse.json({ services });
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       .replace(/^-+|-+$/g, '');
 
     // Check if slug already exists
-    const existing = db.services.getBySlug(slug);
+    const existing = await db.services.getBySlug(slug);
     if (existing) {
       return NextResponse.json(
         { error: 'A service with this title already exists' },
@@ -77,11 +77,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the highest order number and add 1
-    const allServices = db.services.getAll();
+    const allServices = await db.services.getAll();
     const maxOrder = allServices.length > 0 ? Math.max(...allServices.map(s => s.order)) : 0;
     const order = validation.data.order ?? maxOrder + 1;
 
-    const service = db.services.create({
+    const service = await db.services.create({
       ...validation.data,
       slug,
       order,

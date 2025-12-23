@@ -21,7 +21,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const blog = db.blogs.getById(id);
+    const blog = await db.blogs.getById(parseInt(id));
 
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
@@ -69,9 +69,9 @@ export async function PATCH(
 
     // If status is changing to published, set publishedAt
     if (validation.data.status === 'published') {
-      const existing = db.blogs.getById(id);
+      const existing = await db.blogs.getById(parseInt(id));
       if (existing && existing.status !== 'published') {
-        updates.publishedAt = new Date().toISOString();
+        updates.publishedAt = new Date();
       }
     }
 
@@ -81,7 +81,7 @@ export async function PATCH(
       updates.readTime = `${Math.ceil(wordCount / 200)} min read`;
     }
 
-    const updated = db.blogs.update(id, updates);
+    const updated = await db.blogs.update(parseInt(id), updates);
     if (!updated) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
@@ -108,7 +108,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const deleted = db.blogs.delete(id);
+    const deleted = await db.blogs.delete(parseInt(id));
 
     if (!deleted) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });

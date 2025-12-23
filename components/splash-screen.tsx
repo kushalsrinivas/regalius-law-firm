@@ -27,7 +27,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       initial={{ opacity: 1 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#071731]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#021835]"
     >
       <motion.div
         initial={{ opacity: 0 }}

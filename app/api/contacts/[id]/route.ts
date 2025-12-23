@@ -30,7 +30,7 @@ export async function PATCH(
       );
     }
 
-    const updated = db.contacts.update(id, validation.data);
+    const updated = await db.contacts.update(parseInt(id), validation.data);
     if (!updated) {
       return NextResponse.json({ error: 'Contact not found' }, { status: 404 });
     }
@@ -57,7 +57,7 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const deleted = db.contacts.delete(id);
+    const deleted = await db.contacts.delete(parseInt(id));
 
     if (!deleted) {
       return NextResponse.json({ error: 'Contact not found' }, { status: 404 });

@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const contact = db.contacts.create({
+    const contact = await db.contacts.create({
       ...validation.data,
       status: 'new',
     });
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const contacts = db.contacts.getAll();
+    const contacts = await db.contacts.getAll();
     return NextResponse.json({ contacts });
   } catch (error) {
     console.error('Get contacts error:', error);

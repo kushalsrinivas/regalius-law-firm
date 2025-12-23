@@ -69,7 +69,7 @@ export async function deleteSession(): Promise<void> {
 }
 
 export async function authenticate(email: string, password: string): Promise<{ success: boolean; user?: any; error?: string }> {
-  const admin = db.admin.getByEmail(email);
+  const admin = await db.admin.getByEmail(email);
 
   if (!admin) {
     return { success: false, error: 'Invalid credentials' };
@@ -81,12 +81,12 @@ export async function authenticate(email: string, password: string): Promise<{ s
     return { success: false, error: 'Invalid credentials' };
   }
 
-  await createSession(admin.id, admin.email);
+  await createSession(admin.id.toString(), admin.email);
 
   return {
     success: true,
     user: {
-      id: admin.id,
+      id: admin.id.toString(),
       email: admin.email,
       name: admin.name,
     },

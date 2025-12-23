@@ -176,3 +176,5 @@ Should return attorney data! 🎉
 - `check-env.js` - Verify environment variables
 - `diagnose-supabase.js` - Full diagnostic (needs network permissions)
 
+
+
