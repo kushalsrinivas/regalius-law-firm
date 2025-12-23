@@ -6,7 +6,7 @@ import { z } from 'zod';
 const contactSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().optional(),
+  phone: z.string().optional().or(z.literal('')),
   inquiryType: z.string().min(1, 'Inquiry type is required'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
@@ -18,16 +18,21 @@ export async function POST(request: NextRequest) {
 
     const validation = contactSchema.safeParse(body);
     if (!validation.success) {
+      const errorMessages = validation.error.errors.map(err => err.message).join(', ');
       return NextResponse.json(
-        { error: 'Validation failed', details: validation.error.errors },
+        { error: `Validation failed: ${errorMessages}`, details: validation.error.errors },
         { status: 400 }
       );
     }
 
-    const contact = await db.contacts.create({
+    // Clean up the data - convert empty phone to null
+    const contactData = {
       ...validation.data,
-      status: 'new',
-    });
+      phone: validation.data.phone || null,
+      status: 'new' as const,
+    };
+
+    const contact = await db.contacts.create(contactData);
 
     return NextResponse.json({
       success: true,

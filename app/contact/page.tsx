@@ -21,6 +21,8 @@ export default function ContactPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <div className="min-h-screen bg-page-bg">
@@ -105,6 +107,8 @@ export default function ContactPage() {
                       className="space-y-5"
                       onSubmit={async (e) => {
                         e.preventDefault();
+                        setError("");
+                        setSubmitting(true);
                         
                         try {
                           const response = await fetch("/api/contacts", {
@@ -115,13 +119,23 @@ export default function ContactPage() {
 
                           if (response.ok) {
                             setSubmitted(true);
+                            // Reset form
+                            setForm({
+                              name: "",
+                              email: "",
+                              phone: "",
+                              inquiryType: "Corporate Advisory" as InquiryType,
+                              message: "",
+                            });
                           } else {
                             const data = await response.json();
-                            alert(data.error || "Failed to submit. Please try again.");
+                            setError(data.error || "Failed to submit. Please try again.");
                           }
                         } catch (error) {
                           console.error("Submit error:", error);
-                          alert("Failed to submit. Please try again.");
+                          setError("Failed to submit. Please check your connection and try again.");
+                        } finally {
+                          setSubmitting(false);
                         }
                       }}
                     >
@@ -203,17 +217,24 @@ export default function ContactPage() {
                         />
                       </div>
 
+                      {error && (
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-sm">
+                          <p className="text-sm text-red-800">{error}</p>
+                        </div>
+                      )}
+
                       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
                         <p className="text-xs text-body-copy">
-                          This form is a placeholder (no backend). We can wire it to email/CRM next.
+                          We'll respond within 24-48 business hours.
                         </p>
                         <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="px-6 py-3 bg-highlight text-page-bg font-semibold rounded-sm hover:bg-highlight-dark transition-colors"
+                          whileHover={{ scale: submitting ? 1 : 1.02 }}
+                          whileTap={{ scale: submitting ? 1 : 0.98 }}
+                          className="px-6 py-3 bg-highlight text-page-bg font-semibold rounded-sm hover:bg-highlight-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           type="submit"
+                          disabled={submitting}
                         >
-                          Send message
+                          {submitting ? "Sending..." : "Send message"}
                         </motion.button>
                       </div>
                     </form>

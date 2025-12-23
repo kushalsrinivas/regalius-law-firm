@@ -51,12 +51,16 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">ABOUT REGALIUS LAW PARTNERS</div>
+            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
+              ABOUT REGALIUS LAW PARTNERS
+            </div>
             <h1 className="font-serif text-5xl md:text-7xl font-bold text-[#F2F2F2] mb-6 text-balance">
               Who We Are
             </h1>
             <p className="text-[#C7CBD1] text-xl leading-relaxed text-pretty">
-              Regalius Law Partners is a full‑service law firm providing advisory, transactional, and dispute‑resolution services across India.
+              Regalius Law Partners is a full‑service law firm providing
+              advisory, transactional, and dispute‑resolution services across
+              India.
             </p>
           </motion.div>
         </div>
@@ -72,12 +76,21 @@ export default function AboutPage() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">About Us</h2>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
+                About Us
+              </h2>
               <p className="text-[#C7CBD1] leading-relaxed mb-4">
-                Regalius Law Partners is a full‑service law firm providing advisory, transactional, and dispute‑resolution services across India. We act for entrepreneurs, growing companies, established businesses, and individuals, delivering practical legal solutions aligned with real‑world objectives.
+                Regalius Law Partners is a full‑service law firm providing
+                advisory, transactional, and dispute‑resolution services across
+                India. We act for entrepreneurs, growing companies, established
+                businesses, and individuals, delivering practical legal
+                solutions aligned with real‑world objectives.
               </p>
               <p className="text-[#C7CBD1] leading-relaxed">
-                Our lawyers bring deep experience in civil and commercial litigation, property matters, corporate advisory, and regulatory compliance. We focus on anticipating risk, protecting interests, and delivering outcomes—not just opinions.
+                Our lawyers bring deep experience in civil and commercial
+                litigation, property matters, corporate advisory, and regulatory
+                compliance. We focus on anticipating risk, protecting interests,
+                and delivering outcomes—not just opinions.
               </p>
             </motion.div>
 
@@ -89,7 +102,7 @@ export default function AboutPage() {
               className="relative h-[500px] rounded-lg overflow-hidden border border-[#2C3E5F]"
             >
               <img
-                src="/historic-law-firm-library.jpg"
+                src="/intellectual-property-patents.jpg"
                 alt="Regalius Law Partners Library"
                 className="object-cover w-full h-full"
               />
@@ -109,8 +122,12 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
-            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">OUR CORE VALUES</div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">What Drives Us</h2>
+            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
+              OUR CORE VALUES
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
+              What Drives Us
+            </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,22 +135,26 @@ export default function AboutPage() {
               {
                 icon: Target,
                 title: "Excellence",
-                description: "We pursue the highest standards in every case, every time.",
+                description:
+                  "We pursue the highest standards in every case, every time.",
               },
               {
                 icon: Users,
                 title: "Client-Centric",
-                description: "Your success is our mission. We listen, understand, and deliver.",
+                description:
+                  "Your success is our mission. We listen, understand, and deliver.",
               },
               {
                 icon: Heart,
                 title: "Integrity",
-                description: "Ethical conduct and transparency guide every decision we make.",
+                description:
+                  "Ethical conduct and transparency guide every decision we make.",
               },
               {
                 icon: Award,
                 title: "Innovation",
-                description: "We embrace new approaches while honoring proven traditions.",
+                description:
+                  "We embrace new approaches while honoring proven traditions.",
               },
             ].map((value, index) => (
               <motion.div
@@ -145,8 +166,12 @@ export default function AboutPage() {
                 className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg p-8 text-center"
               >
                 <value.icon className="w-12 h-12 mx-auto mb-4 text-[#C6B27E]" />
-                <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">{value.title}</h3>
-                <p className="text-[#C7CBD1] leading-relaxed">{value.description}</p>
+                <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-[#C7CBD1] leading-relaxed">
+                  {value.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -163,17 +188,26 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center mb-16"
           >
-            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">MEET OUR TEAM</div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">Our Attorneys</h2>
+            <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
+              MEET OUR TEAM
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
+              Our Attorneys
+            </h2>
             <p className="text-[#C7CBD1] max-w-2xl mx-auto text-pretty">
-              Our team of experienced attorneys is dedicated to providing exceptional legal services with professionalism and integrity.
+              Our team of experienced attorneys is dedicated to providing
+              exceptional legal services with professionalism and integrity.
             </p>
           </motion.div>
 
           {loading ? (
-            <div className="text-center text-[#C7CBD1]">Loading attorneys...</div>
+            <div className="text-center text-[#C7CBD1]">
+              Loading attorneys...
+            </div>
           ) : attorneys.length === 0 ? (
-            <div className="text-center text-[#C7CBD1]">No attorneys available at this time.</div>
+            <div className="text-center text-[#C7CBD1]">
+              No attorneys available at this time.
+            </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {attorneys.map((attorney, index) => (
@@ -197,10 +231,14 @@ export default function AboutPage() {
                         <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-1 group-hover:text-[#C6B27E] transition-colors">
                           {attorney.name}
                         </h3>
-                        <p className="text-[#C6B27E] text-sm font-medium">{attorney.title}</p>
+                        <p className="text-[#C6B27E] text-sm font-medium">
+                          {attorney.title}
+                        </p>
                       </div>
                     </div>
-                    <div className="text-[#C7CBD1] text-sm mb-2">{attorney.specialty}</div>
+                    <div className="text-[#C7CBD1] text-sm mb-2">
+                      {attorney.specialty}
+                    </div>
                     <Button
                       size="sm"
                       variant="outline"
@@ -219,9 +257,9 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
@@ -229,7 +267,8 @@ export default function AboutPage() {
               Join Our Distinguished Clientele
             </h2>
             <p className="text-[#C7CBD1] text-lg mb-8 text-pretty">
-              Experience the difference that decades of legal excellence can make for your case.
+              Experience the difference that decades of legal excellence can
+              make for your case.
             </p>
             <Link href="/contact">
               <Button className="bg-[#C6B27E] text-[#071731] hover:bg-[#A99663] px-8 py-6 text-lg">
@@ -243,7 +282,10 @@ export default function AboutPage() {
       {/* Footer */}
       <footer className="bg-[#071731] border-t border-[#2C3E5F] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center text-[#C7CBD1] text-sm">
-          <p>&copy; {new Date().getFullYear()} Regalius Law Partners. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Regalius Law Partners. All rights
+            reserved.
+          </p>
         </div>
       </footer>
     </div>

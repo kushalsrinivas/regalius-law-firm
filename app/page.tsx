@@ -27,7 +27,7 @@ const heroImages = [
   "/luxury-law-office-interior-with-dark-wood-and-gold.jpg",
 
   "/corporate-law-office.jpg",
-  "/historic-law-firm-library.jpg",
+  "/intellectual-property-patents.jpg",
   "/hero.png",
 ];
 
@@ -67,7 +67,8 @@ function StatCounter({ icon: Icon, value, suffix, label, index }: any) {
     >
       <Icon className="w-12 h-12 mx-auto mb-4 text-[#C6B27E]" />
       <div className="text-4xl font-bold text-[#F2F2F2] mb-2">
-        {count}{suffix}
+        {count}
+        {suffix}
       </div>
       <div className="text-[#C7CBD1] text-sm">{label}</div>
     </motion.div>
@@ -137,15 +138,15 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="text-[#C6B27E] text-sm tracking-widest mb-4"
               >
-                EXCELLENCE IN LEGAL COUNSEL
+                HIGH COURT ADVOCATES BANGALORE
               </motion.div>
               <h1 className="font-serif text-5xl md:text-7xl font-bold text-[#F2F2F2] mb-6 leading-tight text-balance">
-                Distinguished Legal Expertise
+                Civil & Commercial Litigation Lawyers in Bangalore
               </h1>
               <p className="text-[#C7CBD1] text-lg mb-8 leading-relaxed text-pretty">
-                For over three decades, Regalius Law Partners has provided
-                exceptional legal services to individuals, corporations, and
-                institutions worldwide.
+                Leading High Court advocates in Bangalore specializing in civil litigation, 
+                commercial disputes, arbitration, and corporate legal advisory. Expert representation 
+                at Karnataka High Court, Commercial Courts, and Supreme Court of India.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/contact">
@@ -206,7 +207,12 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: Scale, value: 50, suffix: "+", label: "Cases Won" },
-              { icon: Users, value: 100, suffix: "+", label: "Satisfied Clients" },
+              {
+                icon: Users,
+                value: 100,
+                suffix: "+",
+                label: "Satisfied Clients",
+              },
               { icon: Award, value: 5, suffix: "", label: "Awards Received" },
               { icon: Globe, value: 100, suffix: "%", label: "Legal Way" },
             ].map((stat, index) => (
@@ -234,14 +240,15 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <div className="text-[#C6B27E] text-sm tracking-widest mb-4">
-              OUR EXPERTISE
+              OUR PRACTICE AREAS
             </div>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
-              Practice Areas
+              Legal Services in Bangalore
             </h2>
             <p className="text-[#C7CBD1] max-w-2xl mx-auto text-pretty">
-              Comprehensive legal solutions tailored to your unique needs across
-              multiple practice areas.
+              Expert legal representation in Karnataka High Court and Commercial Courts. 
+              Specialized services in civil litigation, commercial disputes, arbitration, 
+              and corporate advisory for businesses and individuals.
             </p>
           </motion.div>
 
