@@ -35,7 +35,7 @@ export default function Footer() {
                   height={50}
                   className="h-12 w-auto mb-4"
                 />
-              </Link>
+              </Link>q
               <p className="text-body-copy text-sm leading-relaxed">
                 Providing exceptional legal services with authority, trust since our establishment.
               </p>
