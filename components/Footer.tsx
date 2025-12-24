@@ -37,8 +37,7 @@ export default function Footer() {
                 />
               </Link>
               <p className="text-body-copy text-sm leading-relaxed">
-                Providing exceptional legal services with authority, trust, and
-                luxury since our establishment.
+                Providing exceptional legal services with authority, trust since our establishment.
               </p>
             </motion.div>
           </div>

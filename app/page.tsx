@@ -93,14 +93,14 @@ export default function HomePage() {
   }, [showSplash]);
 
   useEffect(() => {
-    // Load practice areas from API
-    fetch("/api/practice-areas")
+    // Load services from API (same as services page)
+    fetch("/api/services")
       .then((res) => res.json())
       .then((data) => {
-        // Take first 3 practice areas
-        setPracticeAreas(data.practiceAreas.slice(0, 3));
+        // Take first 3 services
+        setPracticeAreas(data.services.slice(0, 3));
       })
-      .catch((err) => console.error("Failed to load practice areas:", err));
+      .catch((err) => console.error("Failed to load services:", err));
 
     // Load FAQs from API
     fetch("/api/faqs")
@@ -138,15 +138,15 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="text-[#C6B27E] text-sm tracking-widest mb-4"
               >
-                HIGH COURT ADVOCATES BANGALORE
+                EXCELLENCE IN LEGAL COUNSEL
               </motion.div>
               <h1 className="font-serif text-5xl md:text-7xl font-bold text-[#F2F2F2] mb-6 leading-tight text-balance">
-                Civil & Commercial Litigation Lawyers in Bangalore
+                Distinguished Legal Expertise
               </h1>
               <p className="text-[#C7CBD1] text-lg mb-8 leading-relaxed text-pretty">
-                Leading High Court advocates in Bangalore specializing in civil litigation, 
-                commercial disputes, arbitration, and corporate legal advisory. Expert representation 
-                at Karnataka High Court, Commercial Courts, and Supreme Court of India.
+                Regalius Law Partners has been providing exceptional legal
+                services to individuals, corporations, and institutions
+                worldwide.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/contact">
@@ -243,19 +243,18 @@ export default function HomePage() {
               OUR PRACTICE AREAS
             </div>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-6">
-              Legal Services in Bangalore
+              Practice Areas
             </h2>
             <p className="text-[#C7CBD1] max-w-2xl mx-auto text-pretty">
-              Expert legal representation in Karnataka High Court and Commercial Courts. 
-              Specialized services in civil litigation, commercial disputes, arbitration, 
-              and corporate advisory for businesses and individuals.
+              Comprehensive legal solutions tailored to your unique needs across
+              multiple practice areas.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {practiceAreas.length > 0
               ? practiceAreas.map((area, index) => (
-                  <Link key={area.id} href={`/practice-areas/${area.slug}`}>
+                  <Link key={area.id} href={`/service-details/${area.slug}`}>
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -289,59 +288,63 @@ export default function HomePage() {
                     </motion.div>
                   </Link>
                 ))
-              : // Fallback to static content if API fails
+              : // Fallback to static content if API fails (first 3 services from services page)
                 [
                   {
                     title: "Corporate Law",
                     description:
-                      "Strategic counsel for businesses navigating complex corporate transactions and compliance.",
-                    image: "/modern-corporate-boardroom.png",
+                      "Strategic counsel for mergers, acquisitions, corporate governance, and compliance matters.",
+                    image: "/corporate-law-office.jpg",
+                    slug: "corporate-law",
                   },
                   {
                     title: "Intellectual Property",
                     description:
-                      "Protection and enforcement of patents, trademarks, and copyrights in the global marketplace.",
+                      "Comprehensive protection and enforcement of your patents, trademarks, and copyrights.",
                     image: "/intellectual-property-patents.jpg",
+                    slug: "intellectual-property",
                   },
                   {
                     title: "Litigation",
                     description:
-                      "Aggressive representation in courtrooms with a track record of favorable outcomes.",
+                      "Aggressive courtroom representation with a proven track record of favorable outcomes.",
                     image: "/professional-courtroom.jpg",
+                    slug: "litigation",
                   },
                 ].map((area, index) => (
-                  <motion.div
-                    key={area.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
-                    whileHover={{ y: -5 }}
-                    className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={area.image || "/placeholder.svg"}
-                        alt={area.title}
-                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3A] to-transparent" />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
-                        {area.title}
-                      </h3>
-                      <p className="text-[#C7CBD1] mb-4 leading-relaxed">
-                        {area.description}
-                      </p>
-                      <Button
-                        variant="link"
-                        className="text-[#C6B27E] p-0 h-auto"
-                      >
-                        Learn More <ArrowRight className="ml-2" size={16} />
-                      </Button>
-                    </div>
-                  </motion.div>
+                  <Link key={area.title} href={`/service-details/${area.slug}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
+                      whileHover={{ y: -5 }}
+                      className="bg-[#0C1F3A] border border-[#2C3E5F] rounded-lg overflow-hidden group cursor-pointer h-full"
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={area.image || "/placeholder.svg"}
+                          alt={area.title}
+                          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3A] to-transparent" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-serif text-2xl font-bold text-[#F2F2F2] mb-3">
+                          {area.title}
+                        </h3>
+                        <p className="text-[#C7CBD1] mb-4 leading-relaxed line-clamp-3">
+                          {area.description}
+                        </p>
+                        <Button
+                          variant="link"
+                          className="text-[#C6B27E] p-0 h-auto"
+                        >
+                          Learn More <ArrowRight className="ml-2" size={16} />
+                        </Button>
+                      </div>
+                    </motion.div>
+                  </Link>
                 ))}
           </div>
         </div>
